@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaction</title>
+</head>
+<body>
+    <a href="http://localhost:8080/"><h1>Interaciton</h1></a>
+
+    <div id="app">
+        <div v-if="lists.length > 0">
+            <div >
+                <h2>Who will win</h2>
+                <p v-for="a in computedList">
+                    {{a.votes>0 ? a.name +":"+ a.votes :""}}
+                </p>
+            </div>
+            <ul>
+                <li v-for="list in lists">
+                    name : {{list.name}} votes : {{list.votes}} <button type="button" @click.prevent="increaseThis(list)">Vote</button>
+                </li>
+            </ul>
+            <button @click.prevent="emptyall">Reset</button>
+        </div>
+        <div v-else>
+
+        </div>
+        <div>
+            <label for="putNew">please post new Man</label>
+            <input type="text" name="putNew" id="putNew" v-model="newName">
+            <button type="button" @click.prevent="postNew(newName)">post</button>
+        </div>
+    </div>
+    
+</body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                lists :[],
+                emptyMan : {
+                    name : "",
+                    votes : 0
+                }
+            }
+        },
+        methods: {
+            postNew(newName){
+                if(newName!=""){
+                    let newMan = Object.assign({}, this.emptyMan);
+                    newMan.name = newName;
+                    this.lists.push(newMan)
+                    this.newName = ""
+                    // let e = document.getElementById("putNew")
+                    // e.value = ""
+                }
+            },
+            increaseThis(item){
+                item.votes ++;
+            },
+            emptyall(){
+                this.lists.forEach(el=>{
+                    el.votes = 0;
+                })
+            }
+        },
+        computed : {
+            computedList(){
+                let firstV = this.lists[0]
+                let sameV = [];
+                this.lists.forEach(element => {
+                    if(element.votes > firstV.votes){
+                        sameV =[];
+                        firstV = element
+                        sameV.push(element)
+                    }else if(element.votes == firstV.votes){
+                        sameV.push(element)
+                    }
+                });
+                return sameV;
+            }
+        }
+    })
+    app.mount('#app')
+    </script>
+</html>

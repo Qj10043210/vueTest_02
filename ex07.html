@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="ex07.css">
+</head>
+
+<body>
+    <a href="http://localhost:8080/">
+        <h1>Binding</h1>
+    </a>
+    <div id="app">
+        <div id="box">
+            <div id="eeee">
+                <button id="bts" @click="acceptData(colorData)" :style="autoColor"></button>
+            <div id="colorsP"><input type="text" name="colors" id="colors" placeholder="type 000000" v-model="colorData"
+                    maxlength="7" @keydown.enter="acceptData(colorData)"/></div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+    const hexPt = /([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
+    const app = Vue.createApp({
+        data() {
+            return {
+                colorData: ""
+            }
+        },
+        methods: {
+            acceptData(inputData){
+                if(inputData != null && inputData != ""){
+                    let forgedData = this.indicateData(inputData.toLowerCase());
+                    if(forgedData.errorQ){
+                        this.changeColor(forgedData.value)
+                    }else{
+                        document.getElementById("colors").focus();
+                        alert("you must type correct data form!")
+                    }
+                }else{
+                    document.getElementById("colors").focus();
+                    alert("you must type data!")
+                }
+            },
+            indicateData(inputData){
+                if(hexPt.test(inputData)){
+                    return {errorQ : true , value : '#'+inputData}
+                }else{
+                    return {errorQ : false , value : 'error'}
+                }
+                
+                
+            },
+            changeColor(inputData){
+                document.getElementById("box").style.backgroundColor = inputData;
+            }
+        },
+        computed: {
+            autoColor(){
+                if(this.colorData){
+                    let forgedData = this.indicateData(this.colorData.toLowerCase());
+                    if(forgedData.errorQ){
+                        return {backgroundColor : forgedData.value}
+                    }
+                }
+                
+            }
+        },
+
+
+    })
+    app.mount('#app')
+</script>
+
+</html>

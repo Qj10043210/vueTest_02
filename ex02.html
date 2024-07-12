@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directive</title>
+</head>
+<body>
+    <p>v-show <br>
+        v-if / v-else-if / v-else
+    </p>
+    <div id="app">
+        <h1>{{ msg ? (genderS ? "Hello mr " + msg : "Hello mrs " + msg) : '' }}</h1>
+        <div v-if="!doThis">
+            <label for="gender">Please select your gender</label>
+        <select name="gender" id="gender" v-model="gender">
+            <option value="" disabled selected>Select one</option>
+            <option value="male">male</option>
+            <option value="female">female</option>
+        </select>
+        </div>
+        <div v-else>
+            <label for="names">Then input Your name</label>
+            <input type="text" name="names" id="names" v-model="msg">
+        </div>
+        <button @click="changeOption">changeOPtion</button>
+        <div v-if="currentOpt=='a'">
+            <p :class="currentOpt"></p>
+        </div>
+        <div v-else-if="currentOpt=='b'">
+            <p :class="currentOpt"></p>
+        </div>
+        <div v-else>
+            <p :class="currentOpt"></p>
+        </div>
+        <div v-show="currentOpt != null">
+            {{currentOpt}}
+        </div>
+    </div>
+</body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+    const app = Vue.createApp({
+        data(){
+            return{
+                gender : "",
+                msg : "",
+                genderS : null,
+                changeOpts : ['a', 'b', 'c'],
+                currentOpt : null,
+                nums : 0
+            }
+        },
+        methods: {
+            changeOption(){
+                this.nums++;
+                this.currentOpt = this.changeOpts[this.nums]
+                if(this.nums==2) this.nums = -1
+            }
+        },
+        computed:{
+            doThis(){
+                if(this.gender != ""){
+                    this.gender=="male" ? this.genderS=true : this.genderS =false
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+<style>
+    .a{
+        width: 100px;
+        height: 100px;
+        background-color: red;
+    }
+    .b{
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+    }
+    .c{
+        width: 100px;
+        height: 100px;
+        background-color: yellow;
+    }
+</style>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="http://localhost:8080/"><h1>ECMAScript6</h1></a>
+    <div id="app">
+        <div class="listBox" id="sec01">
+            <p>Arrow function<br>
+                var increament = value => value + 1;<br>
+                same with<br>
+                var increament = function(value){
+                    return value + 1;
+                }
+
+            </p>
+            <label for="data1">Input data1</label>
+            <input type="text" name="data1" id="data1" v-model="data1">
+            <label for="data2">Input data2</label>
+            <input type="text" name="data2" id="data2" v-model="data2">
+            <b>result : {{func1}}</b>
+        </div>
+        <div class="listBox" id="sec02">
+            <p>Use module </p>
+            <b>result : {{func2}}</b>
+        </div>
+        <div class="listBox" id="sec02">
+            <p>마지막으로 정말 강력한 방법<br>
+                function nams(x, y =2){ <br>
+                    return x/y;<br>
+                }<br>
+                이거는 y에 기본매개변수를 선언해주는 것. 위의 경우 nams(6)을 할 경우. 값은 3이 나오고, nams(6,1)을 하면 값이 6이 나오지. <br>
+                function nams(x,y){ y = y== undefined ? 2 : y; return x/y;}로 쓸 수 있다. wow
+            
+            </p>
+        </div>
+    </div>
+    
+</body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+    
+    const app = Vue.createApp({
+        data() {
+            return {
+                data1 : 0,
+                data2 : 0,
+                result1 : null,
+                name : null
+
+            }
+        },
+        computed : {
+            func1(){
+                return this.result1 = parseInt(this.data1) + parseInt(this.data2);
+            },
+            func2(){                
+                return this.name;
+            }
+        },
+        mounted(){
+            import('./ex08.js').then(md=>{this.name = md.name})
+        }
+
+    })
+    app.mount('#app')
+    </script>
+</html>

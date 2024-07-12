@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>v-for</h1>
+    <h3>(value, index) in array 또는 (value, key, index) in object</h3>
+    <div id="app">
+        <ul>
+            <li v-for="(item, index) in lists" :key="index">
+                <b>{{index}}</b><br>
+                <b>{{item.name}} - {{item.age}} </b>
+                <b :style="{color: item.talkable ? 'red' : 'blue', backgroundColor: item.talkable ? 'yellow' : 'green', fontSize: item.talkable ? '20px' : '16px' }"> talkable</b>
+            </li>
+        </ul>
+    </div>
+    
+</body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                lists : [
+                    {name : "a", age : 10, talkable : true},
+                    {name : "b", age : 20, talkable : true},
+                    {name : "c", age : 100, talkable : false},
+                    {name : "d", age : 110, talkable : false},
+
+                ]
+            }
+        },
+    })
+    app.mount('#app')
+    </script>
+</html>

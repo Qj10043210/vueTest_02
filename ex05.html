@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="http://localhost:8080/"><h1>Filter</h1></a>
+    <p>
+        vue2에서의 Vue.filter 한 뒤 asf | customFilter
+        
+        이거는 아래 computed 방식으로 완전히 대체됨
+    </p>
+    <div id="app">
+        <div v-for="item in computedPep">
+            {{ item.name }}
+        </div>
+    </div>
+    
+</body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                pep : [
+                    {name : "alx", age : 150},
+                    {name : "qasdf", age : 110},
+                    {name : "zvvc", age : 180},
+                    {name : "zxcdf", age : 190},
+                    {name : "bbzcxv", age : 10},
+                    {name : "asdff", age : 1100},
+                    {name : "czcxvzxv", age : 1200},
+                ]
+            }
+        },
+        methods: {
+            
+        },
+        computed : {
+            computedPep(){
+                return this.pep.filter((e)=>{
+                   return e.age > 150
+                })
+            }
+        }
+    })
+    
+    app.mount('#app')
+</script>
+</html>

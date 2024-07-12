@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CDN</title>
+    
+</head>
+<body>
+    <div id="test">
+        <h1>Test page here ^^ {{name ? 'hi ' + name : ''}}</h1>
+        <label for="testarea"> {{msg}}</label><br>
+        <input type="text" v-model="msg" name="testarea" title="test here"/> <br>
+        <label for="ex2"> input name here</label><br>
+        <input type="text" name="ex2" id="ex2" v-model="name"/>
+    </div>
+    <br><br>
+    <div id="jqtest">
+        <h1>JQ Way</h1>
+        <label id="testareajqLabel" for="testareajq">jq binding</label><br/>
+        <input id="testareajq" type="text" name="testareajq" title="test here"/>
+    </div>
+</body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+    const app = Vue.createApp({
+        data(){
+            return {
+                msg : "Two-way data binding",
+                name : ""
+            }
+        }
+    })
+    app.mount('#test')
+// vue2에서는 
+//  new Vue({
+//   el: '#app',
+//   data: {
+//     message: 'Hello Vue!'
+//   }
+// })
+</script>
+<script
+  src="https://code.jquery.com/jquery-3.7.1.js"
+  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
+<script>
+    const jqTest = $('#testareajq');
+    jqTest.on('input',function(){
+        let text = $(this).val();
+        $('#testareajqLabel').text(text)
+    })
+</script>
+</html>
